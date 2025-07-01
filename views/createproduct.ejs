@@ -1,0 +1,119 @@
+<%- include('./partials/header') %>
+    <div class="w-full min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+        <!-- Hero Section -->
+        <div class="text-center mb-10" data-aos="fade-down">
+            <h1 class="text-4xl sm:text-5xl font-extrabold text-gray-900 tracking-tight">
+                Create New Product
+            </h1>
+            <p class="mt-3 text-lg sm:text-xl text-gray-600 max-w-2xl mx-auto">
+                Add a new product to your store with ease and style.
+            </p>
+        </div>
+
+        <!-- Flash Messages -->
+        <% if (flash && flash.error && flash.error.length > 0) { %>
+            <div class="max-w-2xl mx-auto mb-6 bg-red-100 border-l-4 border-red-500 text-red-700 p-4 rounded-r-lg" data-aos="fade-up">
+                <%= flash.error %>
+            </div>
+            <% } %>
+                <% if (flash && flash.success && flash.success.length > 0) { %>
+                    <div class="max-w-2xl mx-auto mb-6 bg-green-100 border-l-4 border-green-500 text-green-700 p-4 rounded-r-lg" data-aos="fade-up">
+                        <%= flash.success %>
+                    </div>
+                    <% } %>
+
+                        <!-- Form Card -->
+                        <div class="max-w-2xl mx-auto bg-white rounded-2xl shadow-xl p-8 sm:p-10" data-aos="fade-up" data-aos-delay="100">
+                            <form autocomplete="off" action="/products/create" method="POST" enctype="multipart/form-data" class="space-y-6">
+                                <!-- Product Image -->
+                                <div>
+                                    <label for="Image" class="block text-sm font-medium text-gray-700">Product Image</label>
+                                    <div class="mt-1 flex items-center">
+                                        <input type="file" id="Image" name="Image" accept="image/*" class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-600 hover:file:bg-indigo-100"
+                                            required />
+                                        <img id="imagePreview" class="hidden w-16 h-16 object-cover rounded-md ml-4" alt="Image Preview" />
+                                    </div>
+                                </div>
+
+                                <!-- Product Name -->
+                                <div>
+                                    <label for="name" class="block text-sm font-medium text-gray-700">Product Name</label>
+                                    <input type="text" id="name" name="name" class="mt-1 block w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500" placeholder="Enter product name" required />
+                                </div>
+
+                                <!-- Product Description -->
+                                <div>
+                                    <label for="description" class="block text-sm font-medium text-gray-700">Product Description</label>
+                                    <textarea id="description" name="description" class="mt-1 block w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500" placeholder="Enter product description" required></textarea>
+                                </div>
+
+                                <!-- Price -->
+                                <div>
+                                    <label for="price" class="block text-sm font-medium text-gray-700">Price</label>
+                                    <input type="number" id="price" name="price" step="0.01" class="mt-1 block w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500" placeholder="Enter price (e.g., 99.99)" required />
+                                </div>
+
+                                <!-- Discount -->
+                                <div>
+                                    <label for="discount" class="block text-sm font-medium text-gray-700">Discount (%)</label>
+                                    <input type="number" id="discount" name="discount" min="0" max="100" class="mt-1 block w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500" placeholder="Enter discount (0-100)" />
+                                </div>
+
+                                <!-- Quantity -->
+                                <div>
+                                    <label for="quantity" class="block text-sm font-medium text-gray-700">Quantity</label>
+                                    <input type="number" id="quantity" name="quantity" min="0" class="mt-1 block w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500" placeholder="Enter quantity" required />
+                                </div>
+
+                                <!-- Submit Button -->
+                                <button type="submit" class="w-full py-3 bg-indigo-600 text-white rounded-lg font-semibold text-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition-all duration-300">
+                Create Product
+            </button>
+                            </form>
+
+                            <!-- Navigation Buttons -->
+                            <div class="mt-6 space-y-4">
+                                <a href="/owner/admin/editwindow" class="manageproduct block w-full py-3 bg-yellow-400 text-gray-900 rounded-lg font-semibold text-lg hover:bg-yellow-500 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:ring-offset-2 transition-all duration-300 text-center">
+                Manage Products
+            </a>
+                                <a href="/owner/orders" class="block w-full py-3 bg-yellow-400 text-gray-900 rounded-lg font-semibold text-lg hover:bg-yellow-500 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:ring-offset-2 transition-all duration-300 text-center">
+                Go to Orders
+            </a>
+                                <a href="/owner/sales" class="block w-full py-3 bg-yellow-400 text-gray-900 rounded-lg font-semibold text-lg hover:bg-yellow-500 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:ring-offset-2 transition-all duration-300 text-center">
+                Go to Sale Graph
+            </a>
+                            </div>
+
+                            <!-- Logout Link -->
+                            <p class="text-center text-gray-600 mt-6">
+                                <a href="/owner/logout" class="text-indigo-600 hover:text-indigo-800 font-medium">Logout</a>
+                            </p>
+                        </div>
+    </div>
+
+    <!-- AOS and Custom JavaScript -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 800,
+            once: true,
+        });
+
+        // Image Preview
+        const imageInput = document.getElementById('Image');
+        const imagePreview = document.getElementById('imagePreview');
+        imageInput.addEventListener('change', function() {
+            const file = this.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    imagePreview.src = e.target.result;
+                    imagePreview.classList.remove('hidden');
+                };
+                reader.readAsDataURL(file);
+            } else {
+                imagePreview.classList.add('hidden');
+            }
+        });
+    </script>
+    <%- include('./partials/footer') %>

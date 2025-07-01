@@ -1,0 +1,245 @@
+<%- include('./partials/header') %>
+    <div class="w-full min-h-screen bg-gray-100 text-gray-900 font-sans">
+        <!-- Flash Messages -->
+        <% if (flash.error && flash.error.length > 0) { %>
+            <div class="bg-red-500 text-white text-center py-2">
+                <%= flash.error %>
+            </div>
+            <% } %>
+                <% if (flash.success && flash.success.length > 0) { %>
+                    <div class="bg-green-500 text-white text-center py-2">
+                        <%= flash.success %>
+                    </div>
+                    <% } %>
+
+                        <!-- Hero Section -->
+                        <div class="w-full bg-gradient-to-r from-gray-900 via-gray-800 to-gray-700 text-white py-20 px-4 sm:px-6 lg:px-8">
+                            <div class="max-w-7xl mx-auto text-center">
+                                <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight" data-aos="fade-down">
+                                    Your Cart
+                                </h1>
+                                <p class="text-lg sm:text-xl md:text-2xl mt-4 opacity-90 max-w-2xl mx-auto" data-aos="fade-down" data-aos-delay="100">
+                                    Review your items and complete your order.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Cart and Checkout Content -->
+                        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+                            <% if (cartItems.length === 0) { %>
+                                <div class="text-center py-16 bg-white rounded-xl shadow-md" data-aos="fade-up">
+                                    <h3 class="text-2xl font-semibold text-gray-900">Your Cart is Empty</h3>
+                                    <p class="text-gray-600 mt-2">
+                                        <a href="/products/shop" class="text-yellow-500 hover:text-yellow-600 font-semibold">Continue shopping</a> to add items!
+                                    </p>
+                                </div>
+                                <% } else { %>
+                                    <div class="flex flex-col lg:flex-row gap-10">
+                                        <!-- Cart Items and Address Form -->
+                                        <div class="w-full lg:w-2/3">
+                                            <!-- Cart Items -->
+                                            <div class="bg-white rounded-xl shadow-md p-6 mb-8" data-aos="fade-up">
+                                                <h2 class="text-2xl font-semibold text-gray-900 mb-6">Cart Items (
+                                                    <%= cartItems.length %>)</h2>
+                                                <div class="space-y-6">
+                                                    <% cartItems.forEach(item => { %>
+                                                        <div class="flex items-start gap-4 border-b pb-4" data-aos="fade-up" data-aos-delay="100" data-product-id="<%= item.productId %>" data-price="<%= item.price %>" data-discount="<%= item.discount %>">
+                                                            <!-- Product Image -->
+                                                            <div class="w-24 h-24 flex-shrink-0 rounded-md overflow-hidden">
+                                                                <img class="w-full h-full object-contain" src="data:<%= item.mimeType %>;base64,<%= item.image.toString('base64') %>" alt="<%= item.name %>" loading="lazy" />
+                                                            </div>
+                                                            <!-- Product Details -->
+                                                            <div class="flex-1">
+                                                                <h3 class="text-lg font-semibold text-gray-900">
+                                                                    <%= item.name %>
+                                                                </h3>
+                                                                <p class="text-gray-600 text-sm mt-1">
+                                                                    <% if (item.discount > 0) { %>
+                                                                        <span class="text-green-600 font-medium">₹ <%= (item.price * (1 - item.discount / 100)).toFixed(2) %></span>
+                                                                        <span class="text-gray-500 line-through text-xs">₹ <%= item.price.toFixed(2) %></span>
+                                                                        <span class="text-yellow-500 text-xs">(<%= item.discount %>% OFF)</span>
+                                                                        <% } else { %>
+                                                                            <span class="text-gray-900 font-medium">₹ <%= item.price.toFixed(2) %></span>
+                                                                            <% } %>
+                                                                </p>
+                                                                <!-- Quantity Controls -->
+                                                                <div class="flex items-center gap-2 mt-2">
+                                                                    <button type="button" class="decrease-quantity w-8 h-8 bg-gray-100 flex rounded-full items-center justify-center text-gray-600 hover:bg-gray-200 transition-all duration-200" data-product-id="<%= item.productId %>" aria-label="Decrease quantity of <%= item.name %>">
+                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4" />
+                                                </svg>
+                                            </button>
+                                                                    <span class="px-3 py-1 bg-gray-100 rounded-md text-gray-900 font-medium"><%= item.quantity %></span>
+                                                                    <button type="button" class="increase-quantity w-8 h-8 bg-gray-100 flex rounded-full items-center justify-center text-gray-600 hover:bg-gray-200 transition-all duration-200" data-product-id="<%= item.productId %>" aria-label="Increase quantity of <%= item.name %>">
+                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                                                </svg>
+                                            </button>
+                                                                </div>
+                                                            </div>
+                                                            <!-- Remove Button -->
+                                                            <form action="/cart/remove/<%= item.productId %>" method="POST">
+                                                                <button type="submit" class="text-red-500 hover:text-red-600 transition-all duration-200" aria-label="Remove <%= item.name %> from cart">
+                                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                                            </svg>
+                                        </button>
+                                                            </form>
+                                                        </div>
+                                                        <% }) %>
+                                                </div>
+                                            </div>
+
+                                            <!-- Address Form -->
+                                            <div class="bg-white rounded-xl shadow-md p-6" data-aos="fade-up" data-aos-delay="100">
+                                                <h2 class="text-2xl font-semibold text-gray-900 mb-6">Shipping Address</h2>
+                                                <form id="addressForm" action="/cart/checkout" method="POST" class="space-y-4">
+                                                    <div>
+                                                        <label for="cityname" class="block text-sm font-medium">City</label>
+                                                        <input type="text" id="cityname" name="cityname" required class="w-full p-2 border rounded-md">
+                                                    </div>
+                                                    <div>
+                                                        <label for="statename" class="block text-sm font-medium">State</label>
+                                                        <input type="text" id="statename" name="statename" required class="w-full p-2 border rounded-md">
+                                                    </div>
+                                                    <div>
+                                                        <label for="pincode" class="block text-sm font-medium">Pincode</label>
+                                                        <input type="number" id="pincode" name="pincode" required class="w-full p-2 border rounded-md">
+                                                    </div>
+                                                    <div>
+                                                        <label for="phone_number" class="block text-sm font-medium">Phone Number</label>
+                                                        <input type="number" id="phone_number" name="phone_number" required class="w-full p-2 border rounded-md">
+                                                    </div>
+                                                    <div>
+                                                        <label for="full_address" class="block text-sm font-medium">Full Address</label>
+                                                        <textarea id="full_address" name="full_address" required class="w-full p-2 border rounded-md"></textarea>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+
+                                        <!-- Price Breakdown -->
+                                        <div class="w-full lg:w-1/3">
+                                            <div class="bg-white rounded-xl shadow-md p-6 sticky top-24" data-aos="fade-up" data-aos-delay="200">
+                                                <h2 class="text-2xl font-semibold text-gray-900 mb-6">Order Summary</h2>
+                                                <div class="space-y-4">
+                                                    <div class="flex justify-between">
+                                                        <span class="text-gray-600">Total MRP</span>
+                                                        <span class="text-gray-900 font-medium">
+                                    ₹ <%= cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0).toFixed(2) %>
+                                </span>
+                                                    </div>
+                                                    <div class="flex justify-between">
+                                                        <span class="text-gray-600">Discount on MRP</span>
+                                                        <span class="text-green-600 font-medium">
+                                    - ₹ <%= cartItems.reduce((sum, item) => sum + (item.discount > 0 ? (item.price * (item.discount / 100) * item.quantity) : 0), 0).toFixed(2) %>
+                                </span>
+                                                    </div>
+                                                    <div class="flex justify-between">
+                                                        <span class="text-gray-600">Platform Fee</span>
+                                                        <span class="text-gray-900 font-medium">₹ 20.00</span>
+                                                    </div>
+                                                    <div class="flex justify-between">
+                                                        <span class="text-gray-600">Shipping Fee</span>
+                                                        <span class="text-green-600 font-medium">FREE</span>
+                                                    </div>
+                                                    <div class="w-full h-px bg-gray-200 mt-4"></div>
+                                                    <div class="flex justify-between">
+                                                        <span class="text-xl font-semibold text-gray-900">Total Amount</span>
+                                                        <span class="text-xl font-semibold text-green-600 total-amount">
+                                    ₹ <%= (total + 20).toFixed(2) %>
+                                </span>
+                                                    </div>
+                                                </div>
+                                                <button onclick="document.getElementById('addressForm').submit()" class="mt-6 block w-full text-center px-6 py-3 bg-yellow-400 text-gray-900 rounded-lg text-sm font-semibold hover:bg-yellow-500 transition-all duration-200 shadow-md hover:shadow-lg">
+                            Place Order
+                        </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <% } %>
+                        </div>
+
+                        <!-- AOS and Custom JavaScript -->
+                        <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+                        <script>
+                            AOS.init({
+                                duration: 800,
+                                once: true,
+                            });
+
+                            // Quantity Update Handlers
+                            document.querySelectorAll(".increase-quantity").forEach((button) => {
+                                button.addEventListener("click", async() => {
+                                    const productId = button.getAttribute("data-product-id");
+                                    const quantitySpan = button.previousElementSibling;
+                                    try {
+                                        const response = await fetch(`/cart/add/${productId}`, {
+                                            method: "POST",
+                                            headers: {
+                                                "Content-Type": "application/json"
+                                            },
+                                        });
+                                        if (!response.ok) {
+                                            throw new Error(`HTTP error! status: ${response.status}`);
+                                        }
+                                        const data = await response.json();
+                                        if (data.message === "Product added to cart") {
+                                            const item = data.cart.find((item) => item.productId === productId);
+                                            quantitySpan.textContent = item.quantity;
+                                            updateCartTotal(data.cart);
+                                        } else {
+                                            alert(data.message || "Failed to add product");
+                                        }
+                                    } catch (error) {
+                                        console.error("Error increasing quantity:", error);
+                                        alert("Error adding product to cart");
+                                    }
+                                });
+                            });
+
+                            document.querySelectorAll(".decrease-quantity").forEach((button) => {
+                                button.addEventListener("click", async() => {
+                                    const productId = button.getAttribute("data-product-id");
+                                    const quantitySpan = button.nextElementSibling;
+                                    try {
+                                        const response = await fetch(`/cart/decrease/${productId}`, {
+                                            method: "POST",
+                                            headers: {
+                                                "Content-Type": "application/json"
+                                            },
+                                        });
+                                        if (!response.ok) {
+                                            throw new Error(`HTTP error! status: ${response.status}`);
+                                        }
+                                        const data = await response.json();
+                                        if (data.message === "Quantity decreased") {
+                                            const item = data.cart.find((item) => item.productId === productId);
+                                            quantitySpan.textContent = item.quantity;
+                                            updateCartTotal(data.cart);
+                                        } else if (data.message === "Product removed from cart") {
+                                            window.location.reload();
+                                        } else {
+                                            alert(data.message || "Failed to decrease quantity");
+                                        }
+                                    } catch (error) {
+                                        console.error("Error decreasing quantity:", error);
+                                        alert("Error decreasing quantity");
+                                    }
+                                });
+                            });
+
+                            function updateCartTotal(cart) {
+                                let total = 0;
+                                cart.forEach((item) => {
+                                    const element = document.querySelector(`[data-product-id="${item.productId}"]`);
+                                    const price = parseFloat(element.dataset.price);
+                                    const discount = parseFloat(element.dataset.discount);
+                                    const discountedPrice = discount > 0 ? price * (1 - discount / 100) : price;
+                                    total += discountedPrice * item.quantity;
+                                });
+                                document.querySelector('.total-amount').textContent = `₹ ${(total + 20).toFixed(2)}`;
+                            }
+                        </script>
+    </div>
+    <%- include('./partials/footer') %>

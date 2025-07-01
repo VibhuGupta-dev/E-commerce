@@ -1,0 +1,49 @@
+# Node modules
+node_modules/
+
+# Environment variables
+.env
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Optional npm cache directory
+.npm
+
+# IDEs & Editors
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Coverage directory used by testing tools
+coverage/
+
+# Static build artifacts (optional if you build anything)
+dist/
+build/
+
+# MongoDB dump files
+dump/
+
+# Optional: if you're uploading images locally
+uploads/
+public/uploads/
+
+# Optional: .next or .vercel if using Vercel
+.next/
+.vercel/

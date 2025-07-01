@@ -1,0 +1,115 @@
+<%- include('./partials/header') %>
+    <div class="w-full min-h-screen bg-gray-50 text-gray-900 font-sans">
+        <!-- Flash Messages -->
+        <% if (flash && flash.error && flash.error.length > 0) { %>
+            <div class="fixed top-4 left-1/2 transform -translate-x-1/2 bg-red-600 text-white px-6 py-3 rounded-lg shadow-lg z-50 animate-slide-down">
+                <%= flash.error %>
+            </div>
+            <% } %>
+                <% if (flash && flash.success && flash.success.length > 0) { %>
+                    <div class="fixed top-4 left-1/2 transform -translate-x-1/2 bg-green-600 text-white px-6 py-3 rounded-lg shadow-lg z-50 animate-slide-down">
+                        <%= flash.success %>
+                    </div>
+                    <% } %>
+
+                        <!-- Edit Product Section -->
+                        <div class="w-full bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-800 text-white py-24 px-4 sm:px-6 lg:px-8">
+                            <div class="max-w-4xl mx-auto">
+                                <h1 class="text-4xl sm:text-5xl font-bold tracking-tight text-center" data-aos="zoom-in">
+                                    Edit Product
+                                </h1>
+                                <p class="text-xl mt-6 opacity-90 text-center" data-aos="zoom-in" data-aos-delay="100">
+                                    Refine your product's details with ease.
+                                </p>
+
+                                <!-- Edit Product Form -->
+                                <form action="/owner/edit/<%= product._id %>" method="POST" enctype="multipart/form-data" class="bg-white rounded-2xl shadow-xl p-8 mt-10 text-gray-900" data-aos="fade-up">
+                                    <!-- Product Name -->
+                                    <div class="mb-6">
+                                        <label for="productName" class="block text-sm font-medium text-gray-700 mb-2">Product Name</label>
+                                        <input type="text" id="productName" name="name" value="<%= product && product.name ? product.name : '' %>" class="w-full px-4 py-3 rounded-lg bg-gray-100 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-300"
+                                            placeholder="Enter product name" required />
+                                    </div>
+
+                                    <!-- Product Price, Discount, and Quantity -->
+                                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-6">
+                                        <div>
+                                            <label for="productPrice" class="block text-sm font-medium text-gray-700 mb-2">Price (₹)</label>
+                                            <input type="number" id="productPrice" name="price" value="<%= product && product.price ? product.price : '' %>" step="0.01" min="0" class="w-full px-4 py-3 rounded-lg bg-gray-100 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-300"
+                                                placeholder="Enter product price" required />
+                                        </div>
+                                        <div>
+                                            <label for="productDiscount" class="block text-sm font-medium text-gray-700 mb-2">Discount (%)</label>
+                                            <input type="number" id="productDiscount" name="discount" value="<%= product && product.discount ? product.discount : '0' %>" min="0" max="100" class="w-full px-4 py-3 rounded-lg bg-gray-100 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-300"
+                                                placeholder="Enter discount percentage" />
+                                        </div>
+                                        <div>
+                                            <label for="productQuantity" class="block text-sm font-medium text-gray-700 mb-2">Quantity</label>
+                                            <input type="number" id="productQuantity" name="quantity" value="<%= product && product.quantity ? product.quantity : '0' %>" min="0" class="w-full px-4 py-3 rounded-lg bg-gray-100 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-300"
+                                                placeholder="Enter quantity" required />
+                                        </div>
+                                    </div>
+
+                                    <!-- Product Description -->
+                                    <div class="mb-6">
+                                        <label for="productDescription" class="block text-sm font-medium text-gray-700 mb-2">Description</label>
+                                        <textarea id="productDescription" name="description" rows="6" class="w-full px-4 py-3 rounded-lg bg-gray-100 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-300 resize-none"
+                                            placeholder="Enter product description"><%= product && product.description ? product.description : '' %></textarea>
+                                    </div>
+
+                                    <!-- Product Image -->
+                                    <div class="mb-6">
+                                        <label for="productImage" class="blockEven though I've provided a comprehensive implementation for the order system, I notice that I haven't included the new orders.ejs view file that would display the orders to the owner. Let me add that and ensure all components are complete. I'll also make sure to include the low quantity alert in the shop view.
+
+<xaiArtifact artifact_id=" 618e1df6-cfef-49d5-9c98-66c846524d69 " artifact_version_id="6f6a0b63-10c3-4333-956f-2cb113908d12 " title="Order System Implementation " contentType="text/javascript ">
+
+
+                                    <!-- Background Color -->
+
+
+                                    <!-- Form Actions -->
+                                    <div class="flex justify-end gap-4 ">
+                                        <a href="/owner/admin/editwindow " class="px-6 py-3 bg-gray-200 text-gray-900 rounded-lg text-sm font-medium hover:bg-gray-300 transition-all duration-300 ">Cancel</a>
+                                        <button type="submit " class="px-6 py-3 bg-indigo-600 text-white rounded-lg text-sm font-medium hover:bg-indigo-700 transition-all duration-300 ">Save Changes</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                        <!-- AOS and Tailwind Animation Styles -->
+                        <script src="https://unpkg.com/aos@2.3.1/dist/aos.js "></script>
+                        <script>
+                            AOS.init({
+                                duration: 1000,
+                                easing: 'ease-out-quart',
+                                once: true,
+                            });
+
+                            // Auto-dismiss flash messages after 3 seconds
+                            setTimeout(() => {
+                                const flashMessages = document.querySelectorAll('.animate-slide-down');
+                                flashMessages.forEach(msg => {
+                                    msg.style.transition = 'opacity 0.5s ease-out';
+                                    msg.style.opacity = '0';
+                                    setTimeout(() => msg.remove(), 500);
+                                });
+                            }, 3000);
+                        </script>
+                        <style>
+                            @keyframes slide-down {
+                                from {
+                                    transform: translate(-50%, -100%);
+                                    opacity: 0;
+                                }
+                                to {
+                                    transform: translate(-50%, 0);
+                                    opacity: 1;
+                                }
+                            }
+                            
+                            .animate-slide-down {
+                                animation: slide-down 0.5s ease-out forwards;
+                            }
+                        </style>
+    </div>
+    <%- include('./partials/footer') %>

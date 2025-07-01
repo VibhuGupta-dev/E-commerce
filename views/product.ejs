@@ -1,0 +1,29 @@
+<%- include('./partials/header') %>
+
+    <div class="p-5">
+        <h3 class="text-lg font-semibold text-gray-900 truncate" title="<%= product.name %>">
+            <%= product.name %>
+        </h3>
+        <p class=" text-gray-900 truncate" title="<%= product.description %>">
+
+            <%= product.description %>
+        </p>
+        <div class="flex items-center justify-between mt-3">
+            <div class="flex items-center gap-2">
+                <span class="text-lg font-medium text-gray-900">
+                 ₹ <%= (product.discount > 0 ? product.price * (1 - product.discount / 100) : product.price).toFixed(2) %>
+                  </span>
+                <% if (product.discount > 0) { %>
+                    <span class="text-sm text-gray-500 line-through">
+                     ₹ <%= product.price.toFixed(2) %>
+                       </span>
+                    <% } %>
+            </div>
+            <a href="/cart/add/<%= product._id %>" class="add-to-cart px-4 py-2 bg-yellow-400 text-gray-900 rounded-lg text-sm font-semibold hover:bg-yellow-500 transition-all duration-200 ripple" data-product-id="<%= product._id %>" aria-label="Add <%= product.name %> to cart">
+                      Add to Cart
+                       </a>
+        </div>
+    </div>
+
+
+    <%- include('./partials/footer') %>
